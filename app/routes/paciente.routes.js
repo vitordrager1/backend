@@ -1,11 +1,12 @@
 module.exports = app => {
     const paciente = require("../controllers/paciente.controller")
-    const tutorials = require("../controllers/tutorial.controller");
+    const pessoa = require("../controllers/pessoa.controller")
 
     var router = require("express").Router();
   
-    // Create a new Tutorial
-    router.post("/", paciente.create); //<------------------------------------
+    // Create a new Paciente
+    //router.post("/",(pessoa.create,paciente.create))
+    router.post("/",paciente.create); //<------------------------------------
   
     // Retrieve all Tutorials
     router.get("/pacientes", paciente.findAll);

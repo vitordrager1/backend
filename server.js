@@ -2,7 +2,7 @@ const express = require('express'); // O EXPRESS É UTILIZADO PARA SUBIR E MANTE
 const cors = require('cors');// UTILIZADO PARA PROVER MIDDLEWARE PARA O EXPRESS E HABILITAR O CORS COM VARIAS OPÇÕES
 const db = require("./app/models")
 const app = express();
-
+const Associations = require("./app/models/associations")
 var corsOptions = {
     origin: "http://localhost:8081"
 }
@@ -13,7 +13,7 @@ app.use(express.json())
 
 app.use(express.urlencoded({ extend: true }))
 //sincronizar o banco
-db.sequelize.sync()
+db.sequelize.sync({ force: true })
 .then(() => {
     console.log("Sincronizado ao DB.");
 })
@@ -26,7 +26,8 @@ db.sequelize.sync()
 //       });
     
     
-    
+Associations()
+
 //rota
 //DEFINIDA A PRIMEIRA ROTA
 

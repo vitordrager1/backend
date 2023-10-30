@@ -29,14 +29,16 @@ exports.create = (req,res) => {
       // Paciente.create(paciente)
 }
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
-  Paciente.findAll()
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+ 
+  Paciente.findAll({ where: condition})
     .then(data => {
+      console.log(data)
       res.send(data);
     })
-    .catch(err => {
+    .catch(data,err => {
+      console.log(data)
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving tutorials."

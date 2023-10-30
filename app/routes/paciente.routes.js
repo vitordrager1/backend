@@ -7,10 +7,13 @@ module.exports = app => {
     // Create a new Paciente
     //router.post("/",(pessoa.create,paciente.create))
     router.post("/",paciente.create); //<------------------------------------
-  
-    // Retrieve all Tutorials
-    router.get("/pacientes", paciente.findAll);
+
+    router.get("/pessoas", pessoa.findAll);
+
     router.get("/", paciente.findAll)
+
+      // Retrieve a single Tutorial with id
+   // router.get("/pessoas?name=", pessoa.findAll);
 
     //router.get("/tutorials", tutorials.findAll);
     // router.get("/pacientes", paciente.findAll) //<------------------------------------

@@ -1,18 +1,18 @@
 
 const db = require("../models")
-const Pessoa = db.pessoas;
+const TipoAtend = db.tipoAtend;
 const Op = db.Sequelize.Op;
 
 exports.create = (req,res) => {
-    if (!req.body.nome) {
-        res.status(400).send({
-          message: "Content can not be empty!"
-        });
-        return;
-      }
+    // if (!req.body.nome) {
+    //     res.status(400).send({
+    //       message: "Content can not be empty!"
+    //     });
+    //     return;
+    //   }
       
       // Create a Tutorial
-      Pessoa.create({
+      TipoAtend.create({
         nome: `${req.body.nome}`,
         nr_contato: `${req.body.nrContato}`,
         nr_contatosec: `${req.body.nrContatoSec}`,
@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
   const name = req.query.name;
   var condition = name ? { nome: { [Op.like]: `%${name}%` } } : null;
 
-  Pessoa.findAll({ where: condition })
+  TipoAtend.findAll({ where: condition })
     .then(data => {
       res.send(data);
     })

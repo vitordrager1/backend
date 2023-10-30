@@ -25,5 +25,7 @@ db.sequelize = sequelize
 db.pacientes = require("./paciente.model.js")(sequelize, Sequelize)
 db.atendentes = require("./atendente.model.js")(sequelize, Sequelize)
 db.pessoas = require("./pessoa.model.js")(sequelize, Sequelize)
+db.agendamentos = require("./agendamento.model.js")(sequelize, Sequelize)
+db.tipoAtend = require("./tipoAtendimento.model.js")(sequelize, Sequelize)
 module.exports = db;
 

@@ -13,7 +13,7 @@ app.use(express.json())
 
 app.use(express.urlencoded({ extend: true }))
 //sincronizar o banco
-db.sequelize.sync({ force: true })
+db.sequelize.sync()
 .then(() => {
     console.log("Sincronizado ao DB.");
 })
@@ -38,7 +38,10 @@ app.get("/", (req,res) => {
 })
 
 //require("./app/routes/tutorial.routes")(app);
+require("./app/routes/pessoa.routes")(app);
 require("./app/routes/paciente.routes")(app);
+require("./app/routes/agendamento.routes")(app);
+require("./app/routes/tipoAtend.routes")(app);
 //CONFIGURADO A PORTA E O LISTEN
 const PORT = process.env.PORT || 8080;
 

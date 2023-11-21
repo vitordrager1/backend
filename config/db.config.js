@@ -1,18 +1,24 @@
 // CONEXÃO COM O DATABASE
 
 module.exports = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "COAMO10",
-    DB: "mysql",
-    dialect: "mysql",
-    pool: {
-        max: 5,
-        min: 5,
-        acquire: 30000,
-        idle: 10000
-    }
-}
+	HOST: "localhost",
+	USER: "root",
+	PASSWORD: "COAMO10",
+	DB: "mysql",
+	dialect: "mysql",
+	 // Configurar o fuso horário desejado
+	dialectOptions: {
+		dateStrings: true,
+		typeCast: true,
+	},
+	pool: {
+		max: 5,
+		min: 5,
+		acquire: 30000,
+		idle: 10000,
+	},
+    
+};
 
 // max: maximum number of connection in pool
 // min: minimum number of connection in pool

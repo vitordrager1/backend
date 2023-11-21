@@ -25,6 +25,14 @@ module.exports = (sequelize, Sequelize) => {
       ds_observacao: {
         type: Sequelize.STRING,
       },
+      st_atendimentoRealizado: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      in_cancelado:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       id_operador: {
         type: Sequelize.INTEGER
       }

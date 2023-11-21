@@ -10,8 +10,6 @@ module.exports = app => {
 
     router.get("/pessoas", pessoa.findAll);
 
-    router.get("/", paciente.findAll)
-
       // Retrieve a single Tutorial with id
    // router.get("/pessoas?name=", pessoa.findAll);
 

@@ -34,11 +34,9 @@ exports.findAll = (req, res) => {
  
   Paciente.findAll({ where: condition})
     .then(data => {
-      console.log(data)
       res.send(data);
     })
-    .catch(data,err => {
-      console.log(data)
+    .catch(err => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving tutorials."

@@ -7,7 +7,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
     operatorsAliases: 0,
-
+    timezone: "America/Sao_Paulo",
     pool: {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
@@ -15,7 +15,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
         idle: dbConfig.pool.idle
     }
 })
-
+console.log(sequelize.options.timezone);
 const db = {}
 
 db.Sequelize = Sequelize
@@ -27,5 +27,7 @@ db.atendentes = require("./atendente.model.js")(sequelize, Sequelize)
 db.pessoas = require("./pessoa.model.js")(sequelize, Sequelize)
 db.agendamentos = require("./agendamento.model.js")(sequelize, Sequelize)
 db.tipoAtend = require("./tipoAtendimento.model.js")(sequelize, Sequelize)
+db.atendimento = require("./atendimento.model.js")(sequelize, Sequelize)
+db.tipoIntervencao = require("./tipoIntervencao.model.js")(sequelize, Sequelize)
 module.exports = db;
 

@@ -4,26 +4,32 @@ const TipoAtend = db.tipoAtend;
 const Op = db.Sequelize.Op;
 
 exports.create = (req,res) => {
-    // if (!req.body.nome) {
-    //     res.status(400).send({
-    //       message: "Content can not be empty!"
-    //     });
-    //     return;
-    //   }
-      
-      // Create a Tutorial
-      TipoAtend.create({
-        nome: `${req.body.nome}`,
-        nr_contato: `${req.body.nrContato}`,
-        nr_contatosec: `${req.body.nrContatoSec}`,
-        ds_observacao: `${req.body.dsObservacao}`,
-        id_operador: `${req.body.idOperador}`
-      }
-      );
-      // console.log(paciente)
-      // Save Tutorial in the database
-      // Paciente.create(paciente)
-      
+  if (!req.body.ds_tipoatend) {
+    res.status(400).send({
+      message: "Descrição do tipo de atendimento é um parâmetro obrigatório."
+    });
+    return;
+  }
+  if (!req.body.id_operador) {
+    res.status(400).send({
+      message: "Operador é um parâmetro obrigatório."
+    });
+    return;
+  }
+
+  TipoAtend.create({
+    //cd_tipoAtend: `${req.body.cd_tipoatend}`,
+    ds_tipoAtend: `${req.body.ds_tipoatend}`,
+    id_operador: `${req.body.id_operador}`,
+    
+  }).then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: err.message || "Ocorreu um erro ao recuperar os dados."
+    });
+  });;
 }
 exports.findAll = (req, res) => {
   const name = req.query.name;
@@ -36,6 +42,27 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: err.message || "Ocorreu um erro ao recuperar os dados."
+      });
+    });
+}
+
+
+exports.findOne = (req,res) => {
+  const id = req.params.id;
+
+  TipoAtend.findByPk(id)
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Tipo de atendimento com id ${id} não encontrado.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Tutorial with id=" + id
       });
     });
 }

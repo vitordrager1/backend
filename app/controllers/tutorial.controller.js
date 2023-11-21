@@ -9,7 +9,7 @@ exports.create = (req,res) => {
           message: "Content can not be empty!"
         });
         return;
-      }
+    }
     
       // Create a Tutorial
       const tutorial = {
@@ -72,7 +72,7 @@ exports.findOne = (req,res) => {
 //ATUALIZAR UM TUTORIAL POR ID
 exports.update = (req,res) => {
     const id = req.params.id;
-
+    
     Tutorial.update(req.body, {
       where: { id: id }
     })

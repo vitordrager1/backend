@@ -77,13 +77,13 @@ async function Associations() {
 
 	Paciente.hasMany(Atendimento, {
 		foreignKey: {
-			name: "IdPessoa", // Nome da coluna que será a chave estrangeira
+			name: "id_pessoa", // Nome da coluna que será a chave estrangeira
 			allowNull: false,
 		},
 	});
 	Atendimento.belongsTo(Paciente, {
 		foreignKey: {
-			name: "IdPessoa", // Nome da coluna que será a chave estrangeira
+			name: "id_pessoa", // Nome da coluna que será a chave estrangeira
 			allowNull: false,
 		},
 	});

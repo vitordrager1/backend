@@ -29,11 +29,10 @@ module.exports = (sequelize, Sequelize) => {
         IdPessoa: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            autoIncrement: true
         },
         dt_inativacao: {
         type: Sequelize.DATE,
-        defaultValue: moment(new Date('01/01/2001'), 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss'),
+        // defaultValue: moment(new Date('01/01/2001'), 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss'),
         
         },
         id_operador: {

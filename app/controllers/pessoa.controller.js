@@ -17,6 +17,15 @@ exports.create = (req, res) => {
 		nr_contatosec: `${req.body.nrContatoSec}`,
 		ds_observacao: `${req.body.dsObservacao}`,
 		id_operador: `${req.body.idOperador}`,
+	}).then((data) => {
+		res.send(data)
+	})
+	.catch((err) => {
+		res.status(500).send({
+			message:
+				err.message ||
+				"Some error occurred while retrieving tutorials.",
+		});
 	});
 	// console.log(paciente)
 	// Save Tutorial in the database

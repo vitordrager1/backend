@@ -8,5 +8,6 @@ module.exports = app => {
     router.get("/pessoas/limit", pessoa.findAllLimit);
     router.get("/:id", pessoa.findOne);
     router.put("/:id", pessoa.update);
+    router.post("/",pessoa.create);
     app.use('/api/pessoas', router);
   };

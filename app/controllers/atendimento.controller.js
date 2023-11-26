@@ -4,7 +4,7 @@ const Paciente = db.pacientes;
 const Pessoa = db.pessoas;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
-	if (!req.body.IdPessoa) {
+	if (!req.body.id_pessoa) {
 		res.status(400).send({
 			message: "Id pessoa é um campo obrigatório!",
 		});
@@ -24,7 +24,7 @@ exports.create = (req, res) => {
 	}
 
 	Atendimento.create({
-		nr_atendimento: `${req.body.nr_atendimento}`,
+		// nr_atendimento: `${req.body.nr_atendimento}`,
 		dt_atendimento: `${req.body.dt_atendimento}`,
 		dt_horaInicio: `${req.body.dt_horaInicio}`,
 		dt_horaFim: `${req.body.dt_horaFim}`,
@@ -34,7 +34,10 @@ exports.create = (req, res) => {
         cd_tipoInterv: `${req.body.cd_tipoInterv}`,
         id_pessoa: `${req.body.id_pessoa}`,
 		cd_tipoAtend: `${req.body.cd_tipoAtend}`,
-	});
+	}).then((data) => {
+		res.send(data);
+	})
+	
 };
 exports.findAll = (req, res) => {
 	const name = req.query.name;
@@ -48,10 +51,7 @@ exports.findAll = (req, res) => {
 			},
 		],
 		where: {
-			...condition,
-			in_cancelado: {
-				[Op.eq]: false, // Buscar apenas onde in_cancelado é false
-			},
+			...condition,	
 		},
 	})
 

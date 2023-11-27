@@ -3,7 +3,7 @@
 //Realizar os imports
 
 const db = require("../models");
-const Atendente = db.atendentes;
+const Atendente = db.atendente;
 const Pessoa = db.pessoas;
 const Paciente = db.pacientes;
 const Agendamento = db.agendamentos;
@@ -15,7 +15,7 @@ async function Associations() {
 	//[INICIO] - RELACIONAMENTO PESSOA 1 - 1 ATENDENTE
 	Atendente.belongsTo(Pessoa, {
 		foreignKey: {
-			name: "IdPessoa", // Nome da coluna que será a chave estrangeira
+			name: "id_pessoa", // Nome da coluna que será a chave estrangeira
 			allowNull: false,
 			primaryKey: true, // A chave estrangeira também é a chave primária
 		},
@@ -30,6 +30,7 @@ async function Associations() {
 			primaryKey: true, // A chave estrangeira também é a chave primária
 		},
 	});
+	Pessoa.hasMany(Paciente, { foreignKey: "IdPessoa" });
 	//[FIM] - RELACIONAENTO PESSOA 1 - 1 PACIENTE
 
 	//[INICIO] - RELACIONAENTO AGENDAMENTO N - 1 TIPO ATENDIMENTO
@@ -88,21 +89,25 @@ async function Associations() {
 		},
 	});
 
-    Atendimento.belongsTo(TipoIntervencao, {
-        foreignKey: 'cd_tipoInterv',
-        allowNull: false
-    });
+	Atendimento.belongsTo(TipoIntervencao, {
+		foreignKey: "cd_tipoInterv",
+		allowNull: false,
+	});
 
-    TipoIntervencao.hasMany(Atendimento, {
-        foreignKey: 'cd_tipoInterv',
-        allowNull: false
-    })
+	TipoIntervencao.hasMany(Atendimento, {
+		foreignKey: "cd_tipoInterv",
+		allowNull: false,
+	});
 
-    Atendimento.belongsTo(Agendamento, {
-        foreignKey: 'nr_agendamento'
-    })
-    
+	Atendimento.belongsTo(Agendamento, {
+		foreignKey: "nr_agendamento",
+	});
+
 	//[FIM] - RELACIONAMENTOS ATENDIMENTO
+
+	//[INICIO] - RELACIONAMENTOS ATENDENTE
+
+	//[FIM] - RELACIONAMENTOS ATENDENTE
 }
 
 module.exports = Associations;

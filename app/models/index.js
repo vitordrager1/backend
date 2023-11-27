@@ -23,11 +23,12 @@ db.sequelize = sequelize
 
 //db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize)
 db.pacientes = require("./paciente.model.js")(sequelize, Sequelize)
-db.atendentes = require("./atendente.model.js")(sequelize, Sequelize)
 db.pessoas = require("./pessoa.model.js")(sequelize, Sequelize)
 db.agendamentos = require("./agendamento.model.js")(sequelize, Sequelize)
 db.tipoAtend = require("./tipoAtendimento.model.js")(sequelize, Sequelize)
 db.atendimento = require("./atendimento.model.js")(sequelize, Sequelize)
 db.tipoIntervencao = require("./tipoIntervencao.model.js")(sequelize, Sequelize)
+db.tipoAtendente = require("./tipoAtendente.model.js")(sequelize, Sequelize)
+db.atendente = require("./atendente.model.js")(sequelize, Sequelize)
 module.exports = db;
 

@@ -2,6 +2,7 @@ const db = require("../models");
 const Agendamento = db.agendamentos;
 const Paciente = db.pacientes;
 const Pessoa = db.pessoas;
+const Atendimento = db.atendimento
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
 	if (!req.body.IdPessoa) {
@@ -31,7 +32,18 @@ exports.create = (req, res) => {
 		dt_horaFim: `${req.body.dt_horaFim}`,
 		ds_observacao: `${req.body.ds_observacao}`,
 		id_operador: `${req.body.id_operador}`,
-	});
+		is_atendido: `${req.body.is_atendido}`,
+	})
+		.then((data) => {
+			res.send(data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message ||
+					"Teste.",
+			});
+		});
 };
 exports.findAll = (req, res) => {
 	const name = req.query.name;
@@ -44,12 +56,17 @@ exports.findAll = (req, res) => {
 				include: Pessoa, // Inclua o modelo Pessoa
 			},
 		],
+
 		where: {
-      ...condition,
-      in_cancelado: {
-        [Op.eq]: false, // Buscar apenas onde in_cancelado é false
-      },
-    },
+			...condition,
+			in_cancelado: {
+				[Op.eq]: false, // Buscar apenas onde in_cancelado é false
+			},
+			is_atendido:{
+				[Op.eq]: false
+			}
+			
+		},
 	})
 
 		.then((data) => {
@@ -85,29 +102,64 @@ exports.findOne = (req, res) => {
 		});
 };
 
-
 //ATUALIZAR UM TUTORIAL POR ID
-exports.update = (req,res) => {
-    const nr_agendamento = req.params.nr_agendamento;
-    
-    Agendamento.update(req.body, {
-      where: { nr_agendamento: nr_agendamento }
-    })
-      .then(num => {
-        if (num == 1) {
-          console.log(req.body)
-          res.send({
-            message: "Tutorial was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
-        });
-      });
-}
+exports.update = (req, res) => {
+	const nr_agendamento = req.params.nr_agendamento;
+
+	Agendamento.update(req.body, {
+		where: { nr_agendamento: nr_agendamento },
+	})
+		.then((num) => {
+			if (num == 1) {
+				res.send({
+					message: "Tutorial was updated successfully.",
+				});
+			} else {
+				res.send({
+					message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`,
+				});
+			}
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: "Error updating Tutorial with id=" + id,
+			});
+		});
+};
+
+exports.findAllDate = (req, res) => {
+	const date = req.params.dt_atendimento;
+	console.log(date)
+	var condition = date ? { dt_atendimento: { [Op.eq]: `%${date}%` } } : null;
+
+	Agendamento.findAll({
+		include: [
+			{
+				model: Paciente,
+				include: Pessoa, // Inclua o modelo Pessoa
+			},
+		],
+
+		where: {
+			...condition,
+			in_cancelado: {
+				[Op.eq]: false, // Buscar apenas onde in_cancelado é false
+			},
+			is_atendido:{
+				[Op.eq]: false
+			}
+			
+		},
+	})
+
+		.then((data) => {
+			res.send(data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message ||
+					"Some error occurred while retrieving tutorials.",
+			});
+		});
+};

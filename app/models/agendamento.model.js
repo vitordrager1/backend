@@ -35,6 +35,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       id_operador: {
         type: Sequelize.INTEGER
+      },
+      is_atendido: {
+        type: Sequelize.BOOLEAN
       }
     });
   

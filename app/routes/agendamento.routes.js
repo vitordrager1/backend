@@ -5,6 +5,7 @@ module.exports = (app) => {
 	//router.post("/",(pessoa.create,paciente.create))
 	router.post("/", agendamento.create); //<------------------------------------
 	router.get("/agendamentos", agendamento.findAll); //<------------------------------------
+	router.get("/date/:dt_atendimento", agendamento.findAllDate); //<------------------------------------
 	router.get("/:id", agendamento.findOne);
 	router.put("/:nr_agendamento", agendamento.update);
 	app.use("/api/agendamentos", router);

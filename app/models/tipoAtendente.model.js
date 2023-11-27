@@ -1,6 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
     const TipoAtendente = sequelize.define("tipoAtendente", {
-      ds_tipoAtend: {
+      tp_atendente: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      ds_tipoAtendente: {
         type: Sequelize.STRING,
         allowNull: false,
       },

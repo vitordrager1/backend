@@ -6,8 +6,9 @@ module.exports = app => {
     router.post("/", atendente.create);
 
     router.get("/", atendente.findAll);
+    router.get("/:nr_cpf", atendente.findAll);
 
-    router.get("/:id", atendente.findOne);
+    router.get("/:nr_cpf", atendente.findOne);
 
     app.use('/api/atendente', router);
 };

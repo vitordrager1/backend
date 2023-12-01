@@ -3,6 +3,7 @@ const Agendamento = db.agendamentos;
 const Paciente = db.pacientes;
 const Pessoa = db.pessoas;
 const Atendimento = db.atendimento
+const TipoAtendimento = db.tipoAtend
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
 	if (!req.body.IdPessoa) {
@@ -54,6 +55,45 @@ exports.findAll = (req, res) => {
 			{
 				model: Paciente,
 				include: Pessoa, // Inclua o modelo Pessoa
+			},
+		],
+
+		where: {
+			...condition,
+			in_cancelado: {
+				[Op.eq]: false, // Buscar apenas onde in_cancelado é false
+			},
+			is_atendido:{
+				[Op.eq]: false
+			}
+			
+		},
+	})
+
+		.then((data) => {
+			res.send(data);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message:
+					err.message ||
+					"Some error occurred while retrieving tutorials.",
+			});
+		});
+};
+
+exports.findAllWithDsAtend = (req, res) => {
+	const name = req.query.name;
+	var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+	Agendamento.findAll({
+		include: [
+			{
+				model: Paciente,
+				include: Pessoa, // Inclua o modelo Pessoa
+			},
+			{
+				model: TipoAtendimento, // Adicione o INNER JOIN com a tabela TipoAtendimento
 			},
 		],
 
@@ -137,6 +177,9 @@ exports.findAllDate = (req, res) => {
 			{
 				model: Paciente,
 				include: Pessoa, // Inclua o modelo Pessoa
+			},
+			{
+				model: TipoAtendimento, // Adicione o INNER JOIN com a tabela TipoAtendimento
 			},
 		],
 

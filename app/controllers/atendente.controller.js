@@ -23,10 +23,10 @@ exports.create = (req, res) => {
 		});
 };
 exports.findAll = (req, res) => {
-	const name = req.query.name;
-	var condition = name ? { nome: { [Op.like]: `%${name}%` } } : null;
+	const nr_cpf = req.query.nr_cpf;
+	var condition = nr_cpf ? { nr_cpf: { [Op.eq]: `${nr_cpf}` } } : null;
 
-	Pessoa.findAll({ where: condition })
+	Atendente.findAll({ where: condition })
 		.then((data) => {
 			res.send(data);
 		})
@@ -69,9 +69,9 @@ exports.update = (req, res) => {
 
 //RETORNAR POR ID
 exports.findOne = (req, res) => {
-	const id = req.params.id;
+	const nr_cpf = req.params.nr_cpf;
 
-	Pessoa.findByPk(id)
+	Atendente.findByPk(nr_cpf)
 		.then((data) => {
 			if (data) {
 				res.send(data);

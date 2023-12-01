@@ -37,7 +37,15 @@ exports.findAll = (req, res) => {
 	const name = req.query.name;
 	var condition = name ? { nome: { [Op.like]: `%${name}%` } } : null;
 
-	Pessoa.findAll({ where: condition })
+	Pessoa.findAll({
+		include: [
+			{
+				model: Paciente,
+				required: true
+			},
+		],
+		where: condition,
+	})
 		.then((data) => {
 			res.send(data);
 		})
@@ -67,7 +75,7 @@ exports.findAllLimit = (req, res) => {
 			res.send(data);
 		})
 		.catch((err) => {
-			console.log(err)
+			console.log(err);
 			res.status(500).send({
 				message:
 					err.message || "Ocorreu um erro ao recuperar os dados.",

@@ -41,7 +41,6 @@ exports.findAll = (req, res) => {
 		include: [
 			{
 				model: Paciente,
-				required: true
 			},
 		],
 		where: condition,
@@ -64,7 +63,7 @@ exports.findAllLimit = (req, res) => {
 		include: [
 			{
 				model: Paciente,
-				// required: true
+				required: true
 			},
 		],
 		where: condition,

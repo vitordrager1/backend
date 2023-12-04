@@ -131,7 +131,7 @@ exports.findOne = (req, res) => {
 				res.send(data);
 			} else {
 				res.status(404).send({
-					message: `Agendamento não encontrado com número=${id}.`,
+					message: `aaaaaaaaaaanão encontrado com número=${id}.`,
 				});
 			}
 		})
@@ -145,7 +145,7 @@ exports.findOne = (req, res) => {
 //ATUALIZAR UM TUTORIAL POR ID
 exports.update = (req, res) => {
 	const nr_agendamento = req.params.nr_agendamento;
-
+	console.log(req.body)
 	Agendamento.update(req.body, {
 		where: { nr_agendamento: nr_agendamento },
 	})

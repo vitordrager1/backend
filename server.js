@@ -3,6 +3,7 @@ const cors = require('cors');// UTILIZADO PARA PROVER MIDDLEWARE PARA O EXPRESS 
 const db = require("./app/models")
 const app = express();
 const Associations = require("./app/models/associations")
+const jwt = require('jsonwebtoken')
 var corsOptions = {
     origin: "http://localhost:8081"
 }
@@ -24,14 +25,18 @@ db.sequelize.sync()
 // db.sequelize.sync({ force: true }).then(() => {
 //         console.log("Drop and re-sync db.");
 //       });
-    
-    
 Associations()
 
-//rota
-//DEFINIDA A PRIMEIRA ROTA
 
+function verifyJWT(req, res, next){
+    const token = req.headers['x-access-token'];
+    jwt.verify(token, SECRET, (err, decoded)=>{
+        if(err) return res.status(401).end();
 
+        req.userId = decoded.userId
+        next();
+    })
+}
 
 app.get("/", (req,res) => {
     res.json({message: "BEM VINDO A DRAGER API."})
@@ -47,6 +52,7 @@ require("./app/routes/atendimento.routes")(app);
 require("./app/routes/tipoAtendente.routes")(app);
 require("./app/routes/atendente.routes")(app);
 require("./app/routes/images.routes")(app);
+require("./app/routes/login.routes")(app);
 //CONFIGURADO A PORTA E O LISTEN
 const PORT = process.env.PORT || 8080;
 

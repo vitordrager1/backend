@@ -1,10 +1,9 @@
 const db = require("../models");
 const Atendente = db.atendente;
 const Op = db.Sequelize.Op;
-
+const jwt = require ('jsonwebtoken')
+const SECRET = 'DRAGER041223'
 exports.create = (req, res) => {
-
-
 	// Create a Tutorial
 	Atendente.create({
 		id_pessoa: `${req.body.id_pessoa}`,
@@ -59,7 +58,6 @@ exports.update = (req, res) => {
 			}
 		})
 		.catch((err) => {
-			console.log(err);
 			res.status(500).send({
 				message:
 					"Erro ao recuperar os dados. Entre em contato com o analista responsável.",
@@ -86,5 +84,25 @@ exports.findOne = (req, res) => {
 				message:
 					"Erro ao recuperar os dados. Entre em contato com o analista responsável.",
 			});
+		});
+};
+
+exports.findLogin = (req, res) => {
+	const nr_cpf = req.body.cpf;
+	const cd_hash = req.body.password;
+
+	var condition = nr_cpf ? { nr_cpf: { [Op.eq]: `${nr_cpf}` } } : null;
+
+	Atendente.findAll({ where: condition })
+		.then((data) => {
+
+			if (data[0].dataValues.nr_cpf == nr_cpf && data[0].dataValues.cd_hash == cd_hash) {
+				const token = jwt.sign({userId: data.id_pessoa},SECRET)
+				return res.send({user: data[0].dataValues.id_pessoa, auth: true, token});
+			}
+
+		})
+		.catch((err) => {
+			res.status(401).end()
 		});
 };
